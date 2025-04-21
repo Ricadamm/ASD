@@ -162,19 +162,19 @@ void printTree(Node *root) {
 
 int main() {
     Node *root = NULL;
-    root = insertNode(root, 33);
-    root = insertNode(root, 13);
+    root = insertNode(root, 21);
+    root = insertNode(root, 15);
     root = insertNode(root, 53);
-    root = insertNode(root, 9);
+    root = insertNode(root, 6);
     root = insertNode(root, 25);
-   root = insertNode(root, 55);
-    cout << "Elements: " << endl << "33 13 53 9 25 55" << endl;
+   root = insertNode(root, 67);
+    cout << "Elements: " << endl << "21 15 53 6 25 67" << endl;
     cout << "Avl Tree:" << endl;
     printTree(root);
     cout << endl;
 
-    root = deleteNode(root, 13);
-    cout << "After deleting (13) :" << endl;
+    root = deleteNode(root, 15);
+    cout << "After deleting (15) :" << endl;
     printTree(root);
     cout << endl;
 
