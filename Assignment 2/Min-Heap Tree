@@ -37,17 +37,6 @@ public:
         return currentSize == maxSize;
     }
 
-   Node* insert(int key) {
-    if (isFull()) {
-        return NULL;
-    }
-    Node* newNode = new Node(key);
-    heapArray[++currentSize] = newNode;
-    trickleUp(currentSize);
-    return newNode; 
-}
-    }
-
     void trickleUp(int index) {
         int parent = index / 2;
         Node* bottom = heapArray[index];
@@ -60,17 +49,7 @@ public:
         heapArray[index] = bottom;
     }
 
-    Node* remove() {
-        if (isEmpty()) {
-            return NULL;
-        }
-        Node* root = heapArray[1];
-        heapArray[1] = heapArray[currentSize--];
-        trickleDown(1);
-        return root;
-    }
-
-    void trickleDown(int index) {
+     void trickleDown(int index) {
         int smallerChild;
         Node* top = heapArray[index];
 
@@ -94,6 +73,27 @@ public:
         heapArray[index] = top;
     }
 
+   Node* insert(int key) {
+        if (isFull()) {
+        return NULL;
+        }
+        Node* newNode = new Node(key);
+        heapArray[++currentSize] = newNode;
+        trickleUp(currentSize);
+        return newNode; 
+     }
+    
+
+    Node* remove() {
+        if (isEmpty()) {
+            return NULL;
+        }
+        Node* root = heapArray[1];
+        heapArray[1] = heapArray[currentSize--];
+        trickleDown(1);
+        return root;
+    }
+
     void displayHeap() {
         for (int i = 1; i <= currentSize; i++) {
             cout << heapArray[i]->getKey() << " ";
@@ -103,21 +103,23 @@ public:
 };
 
 int main() {
-    int size;
-    cout << "Number of elements: ";
-    cin >> size;
+ int main() {
+    Heap heap(7);
+    heap.insert(33);
+    heap.insert(13);
+    heap.insert(53);
+    heap.insert(9);
+    heap.insert(25);
+    heap.insert(55);
 
-    Heap heap(size + 1);
+    cout << "Elements:" << endl << "33 13 53 9 25 55" << endl;
+    cout << "Heap:" << endl;
+    heap.displayHeap();
 
-    cout << "Enter " << size << " elements:" << endl;
-    for (int i = 0; i < size; ++i) {
-        int value;
-        cin >> value;
-        heap.insert(value);
-    }
-
-    cout << "Min-heap: ";
+    heap.remove();  
+    cout << "After removing (min):" << endl;
     heap.displayHeap();
 
     return 0;
 }
+
