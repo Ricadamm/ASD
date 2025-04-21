@@ -9,8 +9,6 @@ class Node {
   int height;
 };
 
-int max(int a, int b);
-
 int height(Node *N) {
   if (N == NULL)
     return 0;
@@ -18,7 +16,11 @@ int height(Node *N) {
 }
 
 int max(int a, int b) {
-  return (a > b) ? a : b;
+    if (a > b) {
+        return a;
+    } else {
+        return b;
+    }
 }
 
 Node *newNode(int key) {
@@ -36,11 +38,9 @@ Node *rightRotate(Node *y) {
   x->right = y;
   y->left = T2;
   y->height = max(height(y->left),
-          height(y->right)) +
-        1;
+          height(y->right)) + 1;
   x->height = max(height(x->left),
-          height(x->right)) +
-        1;
+          height(x->right)) + 1;
   return x;
 }
 
@@ -50,19 +50,16 @@ Node *leftRotate(Node *x) {
   y->left = x;
   x->right = T2;
   x->height = max(height(x->left),
-          height(x->right)) +
-        1;
+          height(x->right)) + 1;
   y->height = max(height(y->left),
-          height(y->right)) +
-        1;
+          height(y->right)) + 1;
   return y;
 }
 
 int getBalanceFactor(Node *N) {
   if (N == NULL)
     return 0;
-  return height(N->left) -
-       height(N->right);
+  return height(N->left) - height(N->right);
 }
 
 Node *insertNode(Node *node, int key) {
@@ -96,7 +93,7 @@ Node *insertNode(Node *node, int key) {
   return node;
 }
 
-Node *nodeWithMimumValue(Node *node) {
+Node *MinimumValue(Node *node) {
   Node *current = node;
   while (current->left != NULL)
     current = current->left;
@@ -104,7 +101,6 @@ Node *nodeWithMimumValue(Node *node) {
 }
 
 Node *deleteNode(Node *root, int key) {
-  // Find the node and delete it
   if (root == NULL)
     return root;
   if (key < root->key)
@@ -122,7 +118,7 @@ Node *deleteNode(Node *root, int key) {
         *root = *temp;
       free(temp);
     } else {
-      Node *temp = nodeWithMimumValue(root->right);
+      Node *temp = MinimumValue(root->right);
       root->key = temp->key;
       root->right = deleteNode(root->right, temp->key);
     }
