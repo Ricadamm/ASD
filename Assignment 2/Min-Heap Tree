@@ -103,7 +103,6 @@ public:
 };
 
 int main() {
- int main() {
     Heap heap(7);
     heap.insert(33);
     heap.insert(13);
@@ -113,7 +112,7 @@ int main() {
     heap.insert(55);
 
     cout << "Elements:" << endl << "33 13 53 9 25 55" << endl;
-    cout << "Heap:" << endl;
+    cout << "Min-Heap:" << endl;
     heap.displayHeap();
 
     heap.remove();  
