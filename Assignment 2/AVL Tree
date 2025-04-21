@@ -152,29 +152,31 @@ Node *deleteNode(Node *root, int key) {
   return root;
 }
 
-void printTree(Node *root, string indent, bool last) {
-  if (root != nullptr) {
-    cout << indent;
-    if (last) {
-      cout << "R----";
-      indent += "   ";
-    } else {
-      cout << "L----";
-      indent += "|  ";
+void printTree(Node *root) {
+    if (root != nullptr) {
+        printTree(root->left);
+        cout << root->key << " ";
+        printTree(root->right);
     }
-    cout << root->key << endl;
-    printTree(root->left, indent, false);
-    printTree(root->right, indent, true);
-  }
 }
 
 int main() {
-   Node *root = NULL;
-     root = insertNode(root, 33);
-     root = insertNode(root, 13);
-     root = insertNode(root, 53);
-     root = insertNode(root, 9);
-     printTree(root, "", true);
-   
-   return 0;
+    Node *root = NULL;
+    root = insertNode(root, 33);
+    root = insertNode(root, 13);
+    root = insertNode(root, 53);
+    root = insertNode(root, 9);
+    root = insertNode(root, 25);
+   root = insertNode(root, 55);
+    cout << "Elements: " << endl << "33 13 53 9 25 55" << endl;
+    cout << "Avl Tree:" << endl;
+    printTree(root);
+    cout << endl;
+
+    root = deleteNode(root, 13);
+    cout << "After deleting (13) :" << endl;
+    printTree(root);
+    cout << endl;
+
+    return 0;
 }
