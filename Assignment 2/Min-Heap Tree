@@ -37,14 +37,15 @@ public:
         return currentSize == maxSize;
     }
 
-    bool insert(int key) {
-        if (isFull()) {
-            return false;
-        }
-        Node* newNode = new Node(key);
-        heapArray[++currentSize] = newNode;
-        trickleUp(currentSize);
-        return true;
+   Node* insert(int key) {
+    if (isFull()) {
+        return NULL;
+    }
+    Node* newNode = new Node(key);
+    heapArray[++currentSize] = newNode;
+    trickleUp(currentSize);
+    return newNode; 
+}
     }
 
     void trickleUp(int index) {
