@@ -1,1 +1,51 @@
+#include <iostream>
+#include <vector>
+#include <string>
 
+using namespace std;
+
+void addEdge(vector<vector<double>>& mat, int from, int to, double weight) {
+    mat[from][to] = weight;
+}
+
+void displayMatrix(vector<vector<double>>& mat, const string nodes[]) {
+    int V = mat.size();
+    
+    int col_width = 10;
+    
+    cout << "Adjacency Matrix:" << endl;
+    cout << string(col_width, ' ');
+    for (int i = 0; i < V; i++) {
+        cout.width(col_width);
+        cout << left << nodes[i];
+    }
+    cout << endl;
+
+    for (int i = 0; i < V; i++) {
+        cout.width(col_width);
+        cout << left << nodes[i];
+        for (int j = 0; j < V; j++) {
+            cout.width(col_width);
+            if (mat[i][j] == 0) cout << left << "-";
+            else cout << left << mat[i][j];
+        }
+        cout << endl;
+    }
+}
+
+int main() {
+    const int V = 5;
+    string nodes[V] = {"Home", "Sardjito", "Mirota", "GSP", "MIPA"};
+    vector<vector<double>> mat(V, vector<double>(V, 0));
+
+    addEdge(mat, 0, 1, 10.5);
+    addEdge(mat, 0, 2, 7.4);
+    addEdge(mat, 0, 3, 8.4);
+    addEdge(mat, 1, 4, 1.1);
+    addEdge(mat, 2, 4, 2.4);
+    addEdge(mat, 3, 4, 2.1);
+
+    displayMatrix(mat, nodes);
+
+    return 0;
+}
