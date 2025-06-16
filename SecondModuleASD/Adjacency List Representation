@@ -1,1 +1,37 @@
+#include <iostream>
+#include <vector>
 
+using namespace std;
+
+void addEdge(vector<vector<pair<int, double>>>& adj, int from, int to, double weight) {
+    adj[from].emplace_back(to, weight); 
+}
+
+void displayAdjList(const vector<vector<pair<int, double>>>& adj, const string nodes[]) {
+    for (int i = 0; i < adj.size(); i++) {
+        cout << nodes[i] << " : ";
+        for (auto& edge : adj[i]) {
+            cout << nodes[edge.first] << " (" << edge.second << " km), ";
+        }
+        cout << endl;
+    }
+}
+
+int main() {
+    const int V = 5;
+    string nodes[V] = {"Home", "Sardjito", "Mirota", "GSP", "MIPA"};
+
+    vector<vector<pair<int, double>>> adj(V);
+
+    addEdge(adj, 0, 1, 10.5); 
+    addEdge(adj, 0, 2, 7.4);    
+    addEdge(adj, 0, 3, 8.4);    
+    addEdge(adj, 1, 4, 1.1);   
+    addEdge(adj, 2, 4, 2.4);    
+    addEdge(adj, 3, 4, 2.1);   
+
+    cout << "Adjacency List Representation:" << endl;
+    displayAdjList(adj, nodes);
+
+    return 0;
+}
