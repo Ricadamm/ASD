@@ -1,20 +1,20 @@
 #include <iostream>
-#include <vector>
 #include <limits>
+#include <vector>
 #include <stack>
 
 using namespace std;
 
-const int V = 5; 
+#define V 5
+
 string nodes[V] = {"Home", "Sardjito", "Mirota", "GSP", "MIPA"};
 
-
-int minDistance(const double dist[], const bool visited[]) {
+int minDistance(const double dist[], const bool sptSet[]) {
     double min_dist = numeric_limits<double>::max();
     int min_index = -1;
-    
+
     for (int v = 0; v < V; v++) {
-        if (!visited[v] && dist[v] <= min_dist) {
+        if (!sptSet[v] && dist[v] <= min_dist) {
             min_dist = dist[v];
             min_index = v;
         }
@@ -23,13 +23,13 @@ int minDistance(const double dist[], const bool visited[]) {
 }
 
 
-void printPath(int prev[], int destination) {
+void printPath(int parent[], int dest) {
     stack<int> path;
-    int current = destination;
+    int current = dest;
     
     while (current != -1) {
         path.push(current);
-        current = prev[current];
+        current = parent[current];
     }
     
     while (!path.empty()) {
@@ -39,37 +39,38 @@ void printPath(int prev[], int destination) {
     }
 }
 
+
 void dijkstra(const vector<vector<double>>& graph, int src, int dest) {
-    double dist[V];    
-    int prev[V];       
-    bool visited[V];    
-    
+    double dist[V];   
+    bool sptSet[V];     
+    int parent[V];  
 
     for (int i = 0; i < V; i++) {
         dist[i] = numeric_limits<double>::max();
-        prev[i] = -1;
-        visited[i] = false;
+        sptSet[i] = false;
+        parent[i] = -1;
     }
+
     dist[src] = 0;
-    
+
     for (int count = 0; count < V - 1; count++) {
-        int u = minDistance(dist, visited);
-        if (u == -1 || u == dest) break;
-        
-        visited[u] = true;
-        
+        int u = minDistance(dist, sptSet);
+
+        sptSet[u] = true;
+
         for (int v = 0; v < V; v++) {
-            if (!visited[v] && graph[u][v] > 0 &&
+            if (!sptSet[v] && graph[u][v] > 0 &&
                 dist[u] + graph[u][v] < dist[v]) {
                 dist[v] = dist[u] + graph[u][v];
-                prev[v] = u;
+                parent[v] = u;
             }
         }
     }
-    
-    cout << "Shortest path from Home to MIPA:\n";
-    printPath(prev, dest);
-    cout << "\nTotal distance: " << dist[dest] << " km" << endl;
+
+    cout << "Shortest path from Home to MIPA:" << endl;
+    printPath(parent, dest);
+    cout << endl;
+    cout << "Total distance: " << dist[dest] << " km" << endl;
 }
 
 int main() {
@@ -78,10 +79,10 @@ int main() {
         {0, 0, 0, 0, 1.1},          
         {0, 0, 0, 0, 2.4},          
         {0, 0, 0, 0, 2.1},          
-        {0, 0, 0, 0, 0}             
+        {0, 0, 0, 0, 0}     
     };
     
-    dijkstra(graph, 0, 4); 
+    dijkstra(graph, 0, 4);
     
     return 0;
 }
